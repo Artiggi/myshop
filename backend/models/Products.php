@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 
@@ -56,9 +56,9 @@ class Products extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttrProds()
+    public function getAttrs()
     {
-        return $this->hasMany(AttrProd::className(), ['prod_id' => 'id']);
+        return $this->hasMany(Attributes::className(), ['prod_id' => 'id']);
     }
 
     /**

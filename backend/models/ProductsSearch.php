@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Products;
+use backend\models\Products;
 
 /**
  * ProductsSearch represents the model behind the search form about `frontend\models\Products`.
@@ -48,6 +48,9 @@ class ProductsSearch extends Products
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
