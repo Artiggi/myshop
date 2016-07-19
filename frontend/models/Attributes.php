@@ -31,6 +31,7 @@ class Attributes extends \yii\db\ActiveRecord
         return [
             [['name', 'value'], 'required'],
             [['name', 'value'], 'string', 'max' => 80],
+            [['prod_id'], 'integer'],
         ];
     }
 
@@ -43,14 +44,15 @@ class Attributes extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'value' => 'Value',
+            'prod_id' => 'Prod ID'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttrProds()
+    public function getProd()
     {
-        return $this->hasMany(AttrProd::className(), ['attr_id' => 'id']);
+        return $this->hasOne(Products::className(), ['id' => 'prod_id']);
     }
 }
