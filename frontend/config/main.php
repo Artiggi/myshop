@@ -36,6 +36,9 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'cart' => [
+            'class' => 'yz\shoppingcart\ShoppingCart',
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

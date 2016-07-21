@@ -1,8 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "products".
@@ -16,14 +17,26 @@ use Yii;
  * @property AttrProd[] $attrProds
  * @property Category $cat
  */
-class Products extends \yii\db\ActiveRecord
+class Products extends \yii\db\ActiveRecord 
 {
+
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'products';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+            ]
+        ];
     }
 
     /**
@@ -73,6 +86,21 @@ class Products extends \yii\db\ActiveRecord
     public function getCatName()
     {
         return $this->cat->name;
+    }
+
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['product_id' => 'id']);
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
 

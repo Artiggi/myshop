@@ -19,7 +19,11 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
         <?= $form->field($model, 'price') ?>
 
-        <?= $form->field($model, 'cat_id') ?>
+        <?= $form->field($model, 'cat_id')->dropDownList($catItems)
+
+
+
+        ?>
 
 
 		<div class="row">
@@ -46,7 +50,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 		            <?php foreach ($modelAttr as $i => $modelAttr): ?>
 		                <div class="item panel panel-default"><!-- widgetBody -->
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title pull-left">Address</h3>
+		                        <h3 class="panel-title pull-left">Добавить/Удалить атрибут</h3>
 		                        <div class="pull-right">
 		                            <button type="button" class="add-item btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i></button>
 		                            <button type="button" class="remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
@@ -74,9 +78,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 			            <?php DynamicFormWidget::end(); ?>
 			        </div>
 			    </div>
-
-
-		</div>
+			</div>
 
 
     

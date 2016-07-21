@@ -5,6 +5,7 @@ use common\models\User;
 use backend\models\Products;
 use backend\models\ProductsSearch;
 use backend\models\Attributes;
+use backend\models\Category;
 use backend\models\Model;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -66,6 +67,8 @@ class ProductController extends Controller
     {
         $model = new Products;
         $modelAttr = [new Attributes];
+        $cat = Category::find()->all();
+        $catItems = ArrayHelper::map($cat,'id','name');
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
             $modelAttr = Model::createMultiple(Attributes::classname());
@@ -99,6 +102,7 @@ class ProductController extends Controller
         return $this->render('add', [
             'model' => $model,
             'modelAttr' => (empty($modelAttr)) ? [new Attributes] : $modelAttr,
+            'catItems' => $catItems,
             ]);
         }
     }
@@ -114,7 +118,8 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $modelAttr = $model->attrs;
-
+        $cat = Category::find()->all();
+        $catItems = ArrayHelper::map($cat,'id','name');
         if ($model->load(Yii::$app->request->post())) {
 
             $oldIDs = ArrayHelper::map($modelAttr, 'id', 'id');
@@ -153,7 +158,8 @@ class ProductController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'modelAttr' => (empty($modelAttr)) ? [new Attributes] : $modelAttr
+            'modelAttr' => (empty($modelAttr)) ? [new Attributes] : $modelAttr,
+            'catItems' => $catItems,
         ]);
 
     }

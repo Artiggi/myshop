@@ -15,12 +15,15 @@ class ProductsSearch extends Products
     /**
      * @inheritdoc
      */
+    public $catName;
+
     public function rules()
     {
         return [
             [['id', 'count', 'cat_id'], 'integer'],
             [['name'], 'safe'],
             [['price'], 'number'],
+            [['catName'], 'safe'],
         ];
     }
 
@@ -53,24 +56,39 @@ class ProductsSearch extends Products
             ],
         ]);
 
-        $this->load($params);
+        $dataProvider->setSort([
+            'attributes' => [
+                'name', 'price', 'count',
+                'catName' => [
+                    'asc' => ['category.name' => SORT_ASC],
+                    'desc' => ['category.name' => SORT_DESC],
+                    'label' => 'Категория'
+                ]
+            ]
+        ]);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        if (!($this->load($params) && $this->validate())) {
+
+        $query->joinWith(['cat']);
+        return $dataProvider;
+
         }
 
+
         // grid filtering conditions
+       
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
             'count' => $this->count,
-            'cat_id' => $this->cat_id,
         ]);
+        
+        //$query->andFilterWhere(['like', 'name', $this->name]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
-
+        $query->joinWith(['cat' => function ($q) {
+            $q->where('category.name LIKE "%' . $this->catName . '%"');
+        }]);
+        
         return $dataProvider;
     }
 }

@@ -15,6 +15,7 @@ class ComposerStaticInite4379904a60f83428c4345d18f343081
     public static $prefixLengthsPsr4 = array (
         'y' => 
         array (
+            'yz\\shoppingcart\\' => 16,
             'yii\\swiftmailer\\' => 16,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
@@ -45,6 +46,10 @@ class ComposerStaticInite4379904a60f83428c4345d18f343081
     );
 
     public static $prefixDirsPsr4 = array (
+        'yz\\shoppingcart\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/omnilight/yii2-shopping-cart',
+        ),
         'yii\\swiftmailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer',
