@@ -14,7 +14,7 @@ class CartController extends \yii\web\Controller
         $order = new Order();
         $order->price = $product->price;
         $order->product_id = $product->id;
-        $order->count = 1;
+        $order->count = 0;
         $order->status = 'new';
         $order->customer_id = Yii::$app->user->id;
         $order->save();
@@ -24,8 +24,20 @@ class CartController extends \yii\web\Controller
     public function actionList($id)
     {
         $model = $this->findOrder($id);
+        $model->status = 'confirmed';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['catalog/list']);
+            $product = Products::findOne($model->product);
+            if($product->count < $model->count || $model->count == 0) {
+                Yii::$app->getSession()->setFlash('danger', 'Количество товара превышено не может быть 0 или больше доступного');
+                $model->status = 'failed';
+                $model->save();
+                return $this->redirect(['cart/list', 'id' => $model->id]);
+            }
+            else {
+                $product->count = $product->count - $model->count;
+                $product->save();
+                return $this->redirect(['catalog/list']);
+            }          
         } else {
             return $this->render('list', [
                 'model' => $model,
@@ -35,12 +47,8 @@ class CartController extends \yii\web\Controller
 
     public function actionRemove($id)
     {
-        
-    }
-
-    public function actionUpdate($id, $quantity)
-    {
-        
+        $this->findOrder($id)->delete();
+        return $this->redirect(['catalog/list']);
     }
 
     public function actionOrder()

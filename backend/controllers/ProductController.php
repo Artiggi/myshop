@@ -2,10 +2,10 @@
 namespace backend\controllers;
 use Yii;
 use common\models\User;
-use backend\models\Products;
+use common\models\Products;
 use backend\models\ProductsSearch;
-use backend\models\Attributes;
-use backend\models\Category;
+use common\models\Attributes;
+use common\models\Category;
 use backend\models\Model;
 use yii\filters\AccessControl;
 use yii\web\Controller;

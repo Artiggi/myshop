@@ -9,7 +9,7 @@ $this->title = Html::encode($title);
 
 <h1><?= Html::encode($title) ?></h1>
 
-<div class="col-xs-4 well">
+<div class="col-xs-6 well">
 <div class="row">
 	<div class="col-xs-8"><h4>Вы заказали товар: <?= Html::encode($model->productName)?> </h4></div>
 </div>
@@ -28,8 +28,10 @@ $this->title = Html::encode($title);
 		
 	<div class="form-group">
 		<?= Html::submitButton('Подтвердить', ['class' => 'btn btn-primary']) ?>
+		<?= Html::a('Отменить', ['cart/remove', 'id' => $model->id], ['class' => 'btn btn-danger']) ?>
 	</div>
 	<?php ActiveForm::end(); ?>
+
 </div>
 </div>
 </div>
