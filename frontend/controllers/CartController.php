@@ -4,10 +4,29 @@ use Yii;
 use common\models\Order;
 use common\models\OrderItem;
 use common\models\Products;
+use yii\filters\AccessControl;
 
 
 class CartController extends \yii\web\Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['add', 'list', 'remove', 'order'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+
+                ],
+            ],
+        ];
+    }
+
     public function actionAdd($id)
     {
         $product = Products::findOne($id);
